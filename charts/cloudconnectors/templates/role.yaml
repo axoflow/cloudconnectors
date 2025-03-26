@@ -1,0 +1,33 @@
+{{- if .Values.rbac.enabled }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ template "cloudconnectors.fullname" . }}
+  namespace: {{ template "cloudconnectors.namespace" . }}
+  labels:
+{{ include "cloudconnectors.labels" . | indent 4 }}
+  {{- if .Values.rbac.role.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.rbac.role.annotations }}
+    {{- printf "%s: %s" $key (tpl $value $ | quote) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - persistentvolumeclaims
+  - secrets
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  {{- if .Values.rbac.role.extraRules -}}
+  {{ toYaml .Values.rbac.role.extraRules | nindent 2 -}}
+  {{- end }}
+{{- end }}

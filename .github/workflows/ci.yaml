@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - "release-[0-9]+.[0-9]+*"
+  pull_request:
+
+jobs:
+  verification:
+    name: Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Run Actionlint
+        run: |
+          echo "::add-matcher::.github/actionlint-matcher.json"
+          make lint-actions
+          echo "::remove-matcher owner=actionlint::"
+
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          config: .hadolint.yaml
+
+      - name: Run Yamllint
+        run: |
+          pip install --user yamllint
+          yamllint .
+
+      - name: Run Helm lint
+        run: |
+          make lint-helm
+
+  image-build:
+    name: Image build
+    uses: ./.github/workflows/image-build.yaml
+    with:
+      publish: ${{ github.event_name == 'push' }}
+    permissions:
+      contents: read
+      packages: write
+      id-token: write

@@ -1,0 +1,24 @@
+{{- if .Values.rbac.enabled -}}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "cloudconnectors.fullname" . }}
+  namespace: {{ template "cloudconnectors.namespace" . }}
+  labels:
+{{ include "cloudconnectors.labels" . | indent 4 }}
+  {{- if .Values.rbac.roleBinding.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.rbac.roleBinding.annotations }}
+    {{- printf "%s: %s" $key (tpl $value $ | quote) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "cloudconnectors.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "cloudconnectors.serviceAccountName" . }}
+  namespace: {{ include "cloudconnectors.namespace" . }}
+{{- end }}

@@ -1,0 +1,11 @@
+apiVersion: v2
+type: application
+name: cloudconnectors
+version: 0.0.0
+appVersion: latest
+kubeVersion: ">=1.30.0-0"
+description: Axoflow cloudconnectors helps collecting logs from various cloud-providers
+keywords:
+  - cloud
+  - connectors
+  - Axoflow

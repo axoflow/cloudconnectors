@@ -1,0 +1,279 @@
+# Default values for Cloudconnectors.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- A name in place of the chart name for `app:` labels.
+nameOverride: ""
+
+# -- A name to substitute for the full names of resources.
+fullnameOverride: ""
+
+# -- A namespace override for the app.
+namespaceOverride: ""
+
+# -- replicaCount is the number of replicas to run.
+replicaCount: 1
+
+# -- podLabels is a map of labels to add to the pod.
+podLabels: {}
+# -- podAnnotations is a map of annotations to add to the pod.
+podAnnotations: {}
+
+# -- image is the container image to use.
+image:
+  # -- Name of the image repository to pull the container image from.
+  repository: ghcr.io/axoflow/cloudconnectors
+
+  # -- Image tag override for the default value (chart appVersion).
+  tag: ""
+
+  # -- [Image pull policy](https://kubernetes.io/docs/concepts/containers/images/#updating-images) for updating already existing images on a node.
+  pullPolicy: IfNotPresent
+
+# -- extraArgs is a list of additional arguments to pass to the container.
+extraArgs: []
+
+# -- List of ports to expose from the container.
+ports: []
+
+# -- Storage configuration that is used as persitent storage for cloudconnectors.
+storage:
+  # -- Path where persistent storage will be mounted
+  # path: 
+
+  # -- size of the persistent volume claim
+  size: "1Gi"
+
+  # -- Access mode of the persistent volume claim
+  accessModes:
+    - ReadWriteOncePod
+
+  # -- Persistent volume reclaim policy
+  reclaimPolicy: Retain
+
+  # -- Storage class name of the persistent volume claim
+  storageClassName: ""
+
+# -- List of environment variables to set in the container.
+env:
+  # - name: "AXOROUTER_ENDPOINT"
+  #   value: "axorouter.axoflow-local.svc.cluster.local:4317"
+  # - name: "AZURE_EVENTHUB_CONNECTION_STRING"
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: "azure-eventhub"
+  #       key: "connection"
+  # - name: "AWS_REGION"
+  #   value: "eu-central-1"
+  # - name: "AWS_PROFILE"
+  #   value: "developer"
+  # - name: AWS_SDK_LOAD_CONFIG
+  #   value: "1"
+
+# -- AWS configuration
+awsConfig:
+  # -- AWS credentials configuration
+  enabled: false
+  # -- Use secret for AWS credentials
+  useSecret: false
+  # -- Secret configuration (when useSecret: true)
+  secretName: ""
+  # -- Filesystem configuration (when useSecret: false)
+  hostPath: ""
+
+# -- CPU/Memory resource requests/limits
+resources: {}
+  # -- We usually recommend not to specify default resources and to leave this as a conscious
+  # -- choice for the user. This also increases chances charts run on environments with little
+  # -- resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # -- lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# -- Pod SecurityContext for Cloudconnectors. [More info](https://kubernetes.io/docs/concepts/policy/security-context/)
+# -- SecurityContext holds pod-level security attributes and common container settings.
+# -- This defaults to non root user with uid 1000 and gid 2000.	*v1.PodSecurityContext	false
+# -- ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+podSecurityContext: {}
+#  runAsNonRoot: true
+#  runAsUser: 1000
+#  fsGroup: 2000
+
+# -- liveness probe configuration
+# -- Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  # -- Number of seconds after the container has started before startup, liveness or readiness probes are initiated.
+  # initialDelaySeconds: 1
+  # -- How often in seconds to perform the probe.
+  # periodSeconds: 10
+  # -- Number of seconds after which the probe times out.
+  # timeoutSeconds: 1
+  # -- Minimum consecutive failures for the probe to be considered failed after having succeeded.
+  # failureThreshold: 1
+  # -- Duration in seconds the pod needs to terminate gracefully upon probe failure.
+  # terminationGracePeriodSeconds: 10
+  httpGet:
+    port: 13133
+    path: /
+
+# -- readiness probe configuration
+# -- Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+readinessProbe:
+  # -- Number of seconds after the container has started before startup, liveness or readiness probes are initiated.
+  # initialDelaySeconds: 1
+  # -- How often (in seconds) to perform the probe.
+  # periodSeconds: 10
+  # -- Number of seconds after which the probe times out.
+  # timeoutSeconds: 1
+  # -- Minimum consecutive successes for the probe to be considered successful after having failed.
+  # successThreshold: 1
+  # -- Minimum consecutive failures for the probe to be considered failed after having succeeded.
+  # failureThreshold: 1
+  httpGet:
+    port: 13133
+    path: /
+
+# -- startup probe configuration
+# -- Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+startupProbe: {}
+  # -- Number of seconds after the container has started before startup probes are initiated.
+  # initialDelaySeconds: 1
+  # -- How often in seconds to perform the probe.
+  # periodSeconds: 10
+  # -- Number of seconds after which the probe times out.
+  # timeoutSeconds: 1
+  # -- Minimum consecutive failures for the probe to be considered failed after having succeeded.
+  # failureThreshold: 1
+  # -- Duration in seconds the pod needs to terminate gracefully upon probe failure.
+  # terminationGracePeriodSeconds: 10
+  # httpGet:
+  #   port: 13133
+  #   path: /
+
+# -- extraVolumeMounts is a list of additional volumeMounts to add to the container.
+extraVolumeMounts: []
+
+# -- extraVolumes is a list of additional volumes to add to the pod.
+extraVolumes: []
+
+# -- initContainers is a list of additional init containers to add to the pod.
+initContainers: []
+
+# -- extraContainers is a list of additional containers to add to the pod.
+extraContainers: []
+
+# -- StatefulSet configuration.
+sts:
+  # -- StatefulSet annotations.
+  annotations: {}
+
+  # -- StatefulSet service name.
+  serviceName: ""
+
+  # -- StatefulSet pod management policy.
+  podManagementPolicy: ""
+
+  # -- StatefulSet update strategy.
+  updateStrategy:
+
+    # -- Type of update strategy.
+    type: ""
+
+    # -- Rolling update strategy.
+    rollingUpdate:
+
+      # -- Partition indicates the ordinal at which the statefulset should be partitioned.
+      partition: 0
+
+      # -- Max unavailable is the maximum number of pods that can be unavailable during the update process.
+      maxUnavailable: 1
+
+  # -- StatefulSet revision history limit.
+  revisionHistoryLimit: 10
+
+  # -- StatefulSet minimum ready seconds.
+  minReadySeconds: 0
+
+  # -- StatefulSet termination grace period seconds.
+  terminationGracePeriodSeconds: 10
+
+  # -- StatefulSet image pull secrets.
+  imagePullSecrets: []
+
+  # -- StatefulSet node selector.
+  nodeSelector: {}
+
+  # -- StatefulSet affinity.
+  affinity: {}
+
+  # -- StatefulSet tolerations.
+  tolerations: []
+
+  # -- StatefulSet pod security context.
+  securityContext: {}
+
+  # -- StatefulSet persistent volume claim template.
+  volumeClaimTemplates: []
+
+  # -- StatefulSet persistent volume claim retention policy.
+  persistentVolumeClaimRetentionPolicy:
+
+    # -- whenDeleted is the action to take when the StatefulSet is deleted.
+    whenDeleted: "Retain"
+
+    # -- whenScaled is the action to take when the StatefulSet is scaled.
+    whenScaled: "Retain"
+
+  # -- ordinals controls the numbering of replica indices in a StatefulSet.
+  ordinals:
+
+    # -- start is the starting index for the StatefulSet.
+    start: 0
+
+# -- service configuration.
+service:
+
+  # -- Service annotations.
+  annotations: {}
+
+  # -- Service type.
+  type: ClusterIP
+  # type: LoadBalancer
+  # loadBalancerIP: 1.2.3.4
+  # loadBalancerSourceRanges: []
+
+# -- rbac configuration.
+rbac:
+
+  # -- Specifies whether RBAC resources should be created.
+  enabled: true
+
+  # -- serviceAccount configuration.
+  serviceAccount:
+    # -- create specifies whether a service account should be created.
+    create: true
+
+    # -- name specifies the name of the service account.
+    name: ""
+
+    # -- Annotations to add to the service account.
+    annotations: {}
+
+  # -- role configuration.
+  role:
+
+    # -- Annotations to add to the role.
+    annotations: {}
+
+    # -- Extra rules to add to the role.
+    extraRules: []
+
+  # -- roleBinding configuration.
+  roleBinding:
+
+    # -- annotations to add to the role binding.
+    annotations: {}
