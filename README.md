@@ -28,7 +28,7 @@ At the moment we don't have a common quickstart guide but you can find guides pe
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `AWS_REGION` | Yes | - | AWS region to connect to |
+| `AWS_REGION` | Yes | - | AWS region to connect to |sadadas
 | `AWS_PROFILE` | No | - | AWS profile name to use from config |
 | `AWS_SDK_LOAD_CONFIG` | No | - | Set to 1 to load AWS config |
 | `AWS_ACCESS_KEY_ID` | No | - | AWS access key ID for direct authentication |
