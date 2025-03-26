@@ -1,6 +1,6 @@
 # Azure Event Hubs Connector
 
-This directory contains the Axoflow Azure Event Hubs Connector which helps collecting logs from Azure Event Hubs.
+This directory contains the Axoflow Azure Event Hubs connector which helps collecting logs from Azure Event Hubs.
 
 ## Quickstart
 
@@ -14,7 +14,7 @@ docker run \
         -e AZURE_EVENTHUB_CONNECTION_STRING="${AZURE_EVENTHUB_CONNECTION_STRING}" \
         -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
         -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
-        ghcr.io/axoflow/cloudconnectors:latest
+        ghcr.io/axoflow/axocloudconnectors:latest
 ```
 
 ## Deploy with Helm-chart
