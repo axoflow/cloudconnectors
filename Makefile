@@ -42,7 +42,7 @@ lint-helm: bin/helm ## Lint Helm charts
 ##@ Deploy
 
 DOCKER := docker
-DOCKER_IMAGE_REF := cloudconnectors:dev
+DOCKER_IMAGE_REF := axocloudconnectors:dev
 
 .PHONY: docker-build
 docker-build: ## Build cloudconnectors Docker image
