@@ -4,7 +4,7 @@ This repository houses the cloudconnectors for Axoflow.
 
 ## Quickstart
 
-At the moment we don't have a common quickstart guide but you can find guides per connector:
+You can find guides per connector:
 
 - [Azure connector](./connectors/azure/README.md#quickstart)
 - [AWS connector](./connectors/aws/README.md#quickstart)

@@ -22,7 +22,7 @@ podAnnotations: {}
 # -- image is the container image to use.
 image:
   # -- Name of the image repository to pull the container image from.
-  repository: ghcr.io/axoflow/cloudconnectors
+  repository: ghcr.io/axoflow/axocloudconnectors
 
   # -- Image tag override for the default value (chart appVersion).
   tag: ""

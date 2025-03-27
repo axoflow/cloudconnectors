@@ -58,7 +58,7 @@ jobs:
 
       - name: Set image name
         id: image-name
-        run: echo "value=ghcr.io/axoflow/cloudconnectors" >> "$GITHUB_OUTPUT"
+        run: echo "value=ghcr.io/axoflow/axocloudconnectors" >> "$GITHUB_OUTPUT"
 
       - name: Gather build metadata
         id: meta
