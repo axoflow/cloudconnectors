@@ -4,6 +4,7 @@ receivers:
     profile: ${env:AWS_PROFILE}
     logs:
       poll_interval: 10s
+    storage: file_storage
 
 processors:
   resource/axoflow:
@@ -18,17 +19,17 @@ exporters:
     tls:
       insecure: true
 
-  debug:
-    verbosity: detailed
-
 extensions:
   health_check:
     endpoint: ${env:POD_IP}:13133
+  file_storage:
+    directory: ${env:STORAGE_DIRECTORY}
+    create_directory: true
 
 service:
-  extensions: [health_check]
+  extensions: [health_check, file_storage]
   pipelines:
     logs:
       receivers: [awscloudwatch]
       processors: [resource/axoflow]
-      exporters: [otlp/axorouter, debug]
+      exporters: [otlp/axorouter]

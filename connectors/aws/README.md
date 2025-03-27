@@ -16,6 +16,7 @@ docker run --rm \
   -e AWS_REGION="${AWS_REGION}" \
   -e AWS_SDK_LOAD_CONFIG=1 \
   -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
+  -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
   -v "${HOME}/.aws:/cloudconnectors/.aws:ro" \
   ghcr.io/axoflow/axocloudconnectors:latest
 ```
@@ -28,6 +29,7 @@ docker run --rm \
   -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
   -e AWS_REGION="${AWS_REGION}" \
   -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
+  -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
   ghcr.io/axoflow/axocloudconnectors:latest
 ```
 
@@ -37,6 +39,7 @@ docker run --rm \
 docker run --rm \
   -e AWS_REGION="${AWS_REGION}" \
   -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
+  -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
   ghcr.io/axoflow/axocloudconnectors:latest
 ```
 

@@ -18,9 +18,6 @@ exporters:
     tls:
       insecure: true
 
-  debug:
-    verbosity: detailed
-
 extensions:
   health_check:
     endpoint: ${env:POD_IP}:13133
@@ -34,4 +31,4 @@ service:
     logs:
       receivers: [azureeventhub]
       processors: [resource/axoflow]
-      exporters: [otlp/axorouter, debug]
+      exporters: [otlp/axorouter]
