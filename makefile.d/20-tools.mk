@@ -15,17 +15,17 @@ bin/actionlint-$(ACTIONLINT_VERSION): | $(BIN_DIR)
 
 
 ####
-## Kind
+## MiniKube
 ####
 
-KIND_BIN := $(BIN_DIR)/kind
-KIND_VERSION := 0.27.0
+MINIKUBE_BIN := $(BIN_DIR)/minikube
+MINIKUBE_VERSION := 1.35.0
 
-bin/kind: bin/kind-$(KIND_VERSION)
+bin/minikube: bin/minikube-$(MINIKUBE_VERSION)
 	@ln -sf $(notdir $<) $@
 
-bin/kind-$(KIND_VERSION): | $(BIN_DIR)
-	@curl -sSfL -o $@ 'https://kind.sigs.k8s.io/dl/v$(KIND_VERSION)/kind-$(OSTYPE)-$(ARCHTYPE)'
+bin/minikube-$(MINIKUBE_VERSION): | $(BIN_DIR)
+	@curl -sSfL 'https://github.com/kubernetes/minikube/releases/download/v$(MINIKUBE_VERSION)/minikube-$(OSTYPE)-$(ARCHTYPE)' --output $@
 	@chmod +x $@
 
 ####

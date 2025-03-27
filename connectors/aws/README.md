@@ -58,5 +58,5 @@ awsConfig:
   # -- Secret configuration (when useSecret: true)
   secretName: ""
   # -- Filesystem configuration (when useSecret: false)
-  hostPath: "$(HOME)/.aws"
+  hostPath: "/root/.aws"
 ```

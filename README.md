@@ -45,11 +45,11 @@ make docker-build
 
 ### Kubernetes Deployment
 
-For local Kubernetes deployment using KinD:
+For local Kubernetes deployment using MiniKube:
 
 ```bash
 # Create a local Kubernetes cluster
-make kind-cluster
+make minikube-cluster
 
 # Install the Helm chart
 make install

@@ -42,8 +42,7 @@ lint-helm: bin/helm ## Lint Helm charts
 ##@ Deploy
 
 DOCKER := docker
-DOCKER_IMAGE_REF := cloudconnectors:dev
-AXOFLOW_CONFIG_DIR := /etc/axoflow-otel-collector
+DOCKER_IMAGE_REF := axocloudconnectors:dev
 
 .PHONY: docker-build
 docker-build: ## Build cloudconnectors Docker image
@@ -51,20 +50,20 @@ docker-build: ## Build cloudconnectors Docker image
 	@$(DOCKER) build . -t $(DOCKER_IMAGE_REF)
 	@echo "✅ Docker image built"
 
-.PHONY: kind-cluster
-kind-cluster: bin/kind ## Create a local Kubernetes cluster with KinD
-	@echo "Creating KinD cluster..."
-	@$(KIND_BIN) create cluster --name cloudconnectors
-	@echo "✅ KinD cluster created"
+.PHONY: minikube-cluster
+minikube-cluster: bin/minikube ## Create a local Kubernetes cluster with Minikube
+	@echo "Creating Minikube cluster..."
+	@$(MINIKUBE_BIN) start --driver=docker
+	@echo "✅ Minikube cluster created"
 
-.PHONY: kind-load-image
-kind-load-image: bin/kind ## Load Docker image into KinD cluster
-	@echo "Loading Docker image into KinD cluster..."
-	@$(KIND_BIN) load docker-image $(DOCKER_IMAGE_REF) --name cloudconnectors
+.PHONY: minikube-load-image
+minikube-load-image: bin/minikube ## Load Docker image into Minikube cluster
+	@echo "Loading Docker image into Minikube cluster..."
+	@$(MINIKUBE_BIN) image load $(DOCKER_IMAGE_REF)
 	@echo "✅ Docker image loaded"
 
 .PHONY: install
-install: lint-helm docker-build kind-load-image ## Install cloudconnectors Helm chart
+install: lint-helm docker-build minikube-load-image ## Install cloudconnectors Helm chart
 	@echo "Installing Helm chart..."
 	@$(HELM_BIN) upgrade --install --wait --create-namespace --namespace cloudconnectors cloudconnectors ./charts/cloudconnectors
 	@echo "✅ Helm chart installed" 
