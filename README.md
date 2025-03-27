@@ -57,3 +57,7 @@ make install
 # Uninstall the Helm chart
 make uninstall
 ```
+
+## License
+
+The project is licensed under the [Apache 2.0 License](LICENSE).
