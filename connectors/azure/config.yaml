@@ -12,23 +12,8 @@ processors:
         action: insert
         value: "azure-event-hubs"
 
-exporters:
-  otlp/axorouter:
-    endpoint: ${env:AXOROUTER_ENDPOINT}
-    tls:
-      insecure: true
-
-extensions:
-  health_check:
-    endpoint: ${env:POD_IP}:13133
-  file_storage:
-    directory: ${env:STORAGE_DIRECTORY}
-    create_directory: true
-
 service:
-  extensions: [health_check, file_storage]
   pipelines:
     logs:
       receivers: [azureeventhub]
       processors: [resource/axoflow]
-      exporters: [otlp/axorouter]

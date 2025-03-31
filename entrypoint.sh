@@ -21,7 +21,7 @@ detect_provider() {
 
 if PROVIDER=$(detect_provider); then
     echo "Detected ${PROVIDER} configuration"
-    exec ./axoflow-otel-collector --config "/etc/axoflow-otel-collector/connectors/${PROVIDER}/config.yaml"
+    exec ./axoflow-otel-collector --config "/etc/axoflow-otel-collector/connectors/common-config.yaml" --config "/etc/axoflow-otel-collector/connectors/${PROVIDER}/config.yaml"
 fi
 
 echo "No cloud provider configuration detected. Please set environment variables for one of:"
