@@ -2,7 +2,6 @@ exporters:
   otlp/axorouter:
     endpoint: ${env:AXOROUTER_ENDPOINT}
     tls:
-      insecure: ${env:AXOROUTER_TLS_INSECURE:-false}
       ca_file: ${env:AXOROUTER_CA_FILE}
       ca_pem: ${env:AXOROUTER_CA_PEM}
       cert_file: ${env:AXOROUTER_CERT_FILE}
