@@ -1,6 +1,12 @@
 exporters:
   otlp/axorouter:
     endpoint: ${env:AXOROUTER_ENDPOINT}
+    retry_on_failure:
+      enabled: true
+      max_elapsed_time: 0
+    sending_queue:
+      enabled: true
+      storage: file_storage
     tls:
       insecure: ${env:AXOROUTER_TLS_INSECURE:-false}
       ca_file: ${env:AXOROUTER_CA_FILE}
