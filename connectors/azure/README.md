@@ -9,7 +9,6 @@ Make sure the required environment variables are set before running the connecto
 ```bash
 docker run \
         --rm \
-        -v $(pwd)/config.yaml:/etc/axoflow-otel-collector/config.yaml \
         -v "${STORAGE_DIRECTORY}":"${STORAGE_DIRECTORY}" \
         -e AZURE_EVENTHUB_CONNECTION_STRING="${AZURE_EVENTHUB_CONNECTION_STRING}" \
         -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
