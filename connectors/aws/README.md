@@ -12,35 +12,35 @@ There are many ways you can authenticate and use the CloudWatch service:
 
 ```bash
 docker run --rm \
-  -e AWS_PROFILE="${AWS_PROFILE}" \
-  -e AWS_REGION="${AWS_REGION}" \
-  -e AWS_SDK_LOAD_CONFIG=1 \
-  -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
-  -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
-  -v "${HOME}/.aws:/cloudconnectors/.aws:ro" \
-  ghcr.io/axoflow/axocloudconnectors:latest
+        -e AWS_PROFILE="${AWS_PROFILE}" \
+        -e AWS_REGION="${AWS_REGION}" \
+        -e AWS_SDK_LOAD_CONFIG=1 \
+        -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
+        -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
+        -v "${HOME}/.aws:/cloudconnectors/.aws:ro" \
+        ghcr.io/axoflow/axocloudconnectors:latest
 ```
 
 ### Direct AWS credentials
 
 ```bash
 docker run --rm \
-  -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
-  -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-  -e AWS_REGION="${AWS_REGION}" \
-  -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
-  -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
-  ghcr.io/axoflow/axocloudconnectors:latest
+        -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+        -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+        -e AWS_REGION="${AWS_REGION}" \
+        -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
+        -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
+        ghcr.io/axoflow/axocloudconnectors:latest
 ```
 
 ### Using EC2 instance profile
 
 ```bash
 docker run --rm \
-  -e AWS_REGION="${AWS_REGION}" \
-  -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
-  -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
-  ghcr.io/axoflow/axocloudconnectors:latest
+        -e AWS_REGION="${AWS_REGION}" \
+        -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
+        -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
+        ghcr.io/axoflow/axocloudconnectors:latest
 ```
 
 ## Deploy with Helm-chart
