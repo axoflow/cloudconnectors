@@ -2,6 +2,8 @@
 
 set -eu
 
+: "${STORAGE_DIRECTORY:=etc/axoflow-otel-collector/storage}"
+
 detect_provider() {
     local provider=""
     local count=0
