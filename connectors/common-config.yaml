@@ -9,16 +9,16 @@ exporters:
       storage: file_storage
     tls:
       insecure: ${env:AXOROUTER_TLS_INSECURE:-false}
-      ca_file: ${env:AXOROUTER_CA_FILE}
-      ca_pem: ${env:AXOROUTER_CA_PEM}
-      cert_file: ${env:AXOROUTER_CERT_FILE}
-      cert_pem: ${env:AXOROUTER_CERT_PEM}
-      key_file: ${env:AXOROUTER_KEY_FILE}
-      key_pem: ${env:AXOROUTER_KEY_PEM}
+      ca_file: ${env:AXOROUTER_TLS_CA_FILE}
+      ca_pem: ${env:AXOROUTER_TLS_CA_PEM}
+      cert_file: ${env:AXOROUTER_TLS_CERT_FILE}
+      cert_pem: ${env:AXOROUTER_TLS_CERT_PEM}
+      key_file: ${env:AXOROUTER_TLS_KEY_FILE}
+      key_pem: ${env:AXOROUTER_TLS_KEY_PEM}
       min_version: ${env:AXOROUTER_TLS_MIN_VERSION:-1.2}
       max_version: ${env:AXOROUTER_TLS_MAX_VERSION}
-      include_system_ca_certs_pool: ${env:AXOROUTER_INCLUDE_SYSTEM_CA_CERTS_POOL:-false}
-      insecure_skip_verify: ${env:AXOROUTER_INSECURE_SKIP_VERIFY:-false}
+      include_system_ca_certs_pool: ${env:AXOROUTER_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL:-false}
+      insecure_skip_verify: ${env:AXOROUTER_TLS_INSECURE_SKIP_VERIFY:-false}
 
 extensions:
   health_check:
