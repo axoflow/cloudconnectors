@@ -58,11 +58,11 @@ storage:
 env:
   # - name: "AXOROUTER_ENDPOINT"
   #   value: "axorouter.axoflow-local.svc.cluster.local:4317"
-  # - name: "AZURE_EVENTHUB_CONNECTION_STRING"
+  # - name: "AZURE_EVENT_HUBS_CONNECTION_STRING"
   #   valueFrom:
   #     secretKeyRef:
-  #       name: "azure-eventhub"
-  #       key: "connection"
+  #       name: "azure-event-hubs"
+  #       key: "connection-string"
   # - name: "AWS_REGION"
   #   value: "eu-central-1"
   # - name: "AWS_PROFILE"

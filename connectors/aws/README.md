@@ -60,3 +60,32 @@ awsConfig:
   # -- Filesystem configuration (when useSecret: false)
   hostPath: "/root/.aws"
 ```
+
+### Example deploy with Axorouter in cluster
+
+```bash
+make minikube-cluster
+make docker-build
+make minikube-load-image
+
+kubectl create namespace cloudconnectors
+kubectl create secret generic aws-credentials \
+  --from-literal=access-key-id="<YOUR-AWS-ACCESS-KEY-ID>" \
+  --from-literal=secret-access-key="<YOUR-AWS-SECRET-ACCESS-KEY>" \
+  --namespace cloudconnectors \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+helm upgrade --install --wait --namespace cloudconnectors cloudconnectors ./charts/cloudconnectors \
+  --set image.repository="axocloudconnectors" \
+  --set image.tag="dev" \
+  --set 'env[0].name=AXOROUTER_ENDPOINT' \
+  --set 'env[0].value=axorouter.axoflow-local.svc.cluster.local:4317' \
+  --set 'env[1].name=AWS_REGION' \
+  --set 'env[1].value=<YOUR-AWS-REGION>' \
+  --set 'env[2].name=AWS_ACCESS_KEY_ID' \
+  --set 'env[2].valueFrom.secretKeyRef.name=aws-credentials' \
+  --set 'env[2].valueFrom.secretKeyRef.key=access-key-id' \
+  --set 'env[3].name=AWS_SECRET_ACCESS_KEY' \
+  --set 'env[3].valueFrom.secretKeyRef.name=aws-credentials' \
+  --set 'env[3].valueFrom.secretKeyRef.key=secret-access-key'
+```
