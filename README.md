@@ -33,7 +33,7 @@ You can find guides per connector:
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `AZURE_EVENTHUB_CONNECTION_STRING` | Yes | - | Azure Event Hub connection string |
+| `AZURE_EVENT_HUBS_CONNECTION_STRING` | Yes | - | Azure Event Hub connection string |
 
 ### AWS Provider
 

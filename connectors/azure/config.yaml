@@ -1,6 +1,6 @@
 receivers:
   azureeventhub:
-    connection: ${env:AZURE_EVENTHUB_CONNECTION_STRING}
+    connection: ${env:AZURE_EVENT_HUBS_CONNECTION_STRING}
     format: azure
     apply_semantic_conventions: true
     storage: file_storage
