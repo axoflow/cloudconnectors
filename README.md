@@ -17,6 +17,17 @@ You can find guides per connector:
 |----------|----------|---------|-------------|
 | `AXOROUTER_ENDPOINT` | Yes | - | Axorouter endpoint |
 | `STORAGE_DIRECTORY` | No | `/etc/axoflow-otel-collector/storage` | Directory used for persistence |
+| `AXOROUTER_TLS_INSECURE` | No | `false` | Whether to disable TLS security |
+| `AXOROUTER_TLS_CA_FILE` | No | - | Path to the CA certificate file |
+| `AXOROUTER_TLS_CA_PEM` | No | - | PEM-encoded CA certificate |
+| `AXOROUTER_TLS_CERT_FILE` | No | - | Path to the client certificate file |
+| `AXOROUTER_TLS_CERT_PEM` | No | - | PEM-encoded client certificate |
+| `AXOROUTER_TLS_KEY_FILE` | No | - | Path to the client private key file |
+| `AXOROUTER_TLS_KEY_PEM` | No | - | PEM-encoded client private key |
+| `AXOROUTER_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use |
+| `AXOROUTER_TLS_MAX_VERSION` | No | - | Maximum TLS version to use |
+| `AXOROUTER_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Whether to include system CA certificates |
+| `AXOROUTER_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Whether to skip TLS certificate verification |
 
 ### Azure Provider
 
