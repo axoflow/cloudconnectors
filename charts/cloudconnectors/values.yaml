@@ -54,6 +54,9 @@ storage:
   # -- Storage class name of the persistent volume claim
   storageClassName: ""
 
+  # -- Custom persistent volume enabled
+  customPVEnabled: false
+
 # -- List of environment variables to set in the container.
 env:
   # - name: "AXOROUTER_ENDPOINT"
