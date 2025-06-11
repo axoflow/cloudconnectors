@@ -27,6 +27,24 @@ processors:
         action: insert
         value: ${env:AXOCLOUDCONNECTOR_DEVICE_ID}
 
+  resourcedetection/system:
+    detectors: ["system", "env"]
+    system:
+      hostname_sources: ["dns", "os", "cname", "lookup"]
+      resource_attributes:
+        host.name:
+          enabled: true
+        host.arch:
+          enabled: true
+        host.ip:
+          enabled: true
+        host.id:
+          enabled: true
+        host.mac:
+          enabled: true
+        os.type:
+          enabled: true
+
 extensions:
   health_check:
     endpoint: ${env:POD_IP}:13133
@@ -38,5 +56,5 @@ service:
   extensions: [health_check, file_storage]
   pipelines:
     logs:
-      processors: [resource/axoflow_device_id]
+      processors: [resource/axoflow_device_id, resourcedetection/system]
       exporters: [otlp/axorouter]
