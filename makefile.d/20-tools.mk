@@ -13,7 +13,6 @@ bin/actionlint-$(ACTIONLINT_VERSION): | $(BIN_DIR)
 	| bash -s -- "$(ACTIONLINT_VERSION)" "$(BIN_DIR)"
 	@mv bin/actionlint $@
 
-
 ####
 ## MiniKube
 ####

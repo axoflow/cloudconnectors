@@ -28,6 +28,7 @@ You can find guides per connector:
 | `AXOROUTER_TLS_MAX_VERSION` | No | - | Maximum TLS version to use |
 | `AXOROUTER_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Whether to include system CA certificates |
 | `AXOROUTER_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Whether to skip TLS certificate verification |
+| `AXOCLOUDCONNECTOR_DEVICE_ID` | Yes | - | A service id that will be used to identify the cloud connector in Axoflow |
 
 ### Azure Provider
 

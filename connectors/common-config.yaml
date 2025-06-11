@@ -20,6 +20,13 @@ exporters:
       include_system_ca_certs_pool: ${env:AXOROUTER_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL:-false}
       insecure_skip_verify: ${env:AXOROUTER_TLS_INSECURE_SKIP_VERIFY:-false}
 
+processors:
+  resource/axoflow_device_id:
+    attributes:
+      - key: "com.axoflow.device_id"
+        action: insert
+        value: ${env:AXOCLOUDCONNECTOR_DEVICE_ID}
+
 extensions:
   health_check:
     endpoint: ${env:POD_IP}:13133
@@ -31,4 +38,5 @@ service:
   extensions: [health_check, file_storage]
   pipelines:
     logs:
+      processors: [resource/axoflow_device_id]
       exporters: [otlp/axorouter]
