@@ -46,7 +46,7 @@ helm upgrade --install --wait --namespace cloudconnectors cloudconnectors ./char
   --set 'env[0].name=AXOROUTER_ENDPOINT' \
   --set 'env[0].value=axorouter.axoflow-local.svc.cluster.local:4317' \
   --set 'env[1].name=AXOCLOUDCONNECTOR_DEVICE_ID' \
-  --set 'env[1].value=${AXOCLOUDCONNECTOR_DEVICE_ID}' \
+  --set "env[1].value=${AXOCLOUDCONNECTOR_DEVICE_ID}" \
   --set 'env[2].name=AZURE_EVENT_HUBS_CONNECTION_STRING' \
   --set 'env[2].valueFrom.secretKeyRef.name=azure-event-hubs' \
   --set 'env[2].valueFrom.secretKeyRef.key=connection-string'

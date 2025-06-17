@@ -99,7 +99,7 @@ helm upgrade --install --wait --namespace cloudconnectors cloudconnectors ./char
   --set 'env[0].name=AXOROUTER_ENDPOINT' \
   --set 'env[0].value=axorouter.axoflow-local.svc.cluster.local:4317' \
   --set 'env[1].name=AXOCLOUDCONNECTOR_DEVICE_ID' \
-  --set 'env[1].value=${AXOCLOUDCONNECTOR_DEVICE_ID}' \
+  --set "env[1].value=${AXOCLOUDCONNECTOR_DEVICE_ID}" \
   --set 'env[2].name=AWS_REGION' \
   --set 'env[2].value=<YOUR-AWS-REGION>' \
   --set 'env[3].name=AWS_ACCESS_KEY_ID' \
