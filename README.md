@@ -16,7 +16,7 @@ You can find guides per connector:
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `AXOROUTER_ENDPOINT` | Yes | - | Axorouter endpoint |
-| `STORAGE_DIRECTORY` | No | `/etc/axoflow-otel-collector/storage` | Directory used for persistence |
+| `STORAGE_DIRECTORY` | No (Yes in case of Docker) | `/etc/axoflow-otel-collector/storage` | Directory used for persistence |
 | `AXOROUTER_TLS_INSECURE` | No | `false` | Whether to disable TLS security |
 | `AXOROUTER_TLS_CA_FILE` | No | - | Path to the CA certificate file |
 | `AXOROUTER_TLS_CA_PEM` | No | - | PEM-encoded CA certificate |
