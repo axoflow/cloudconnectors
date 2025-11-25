@@ -1,4 +1,4 @@
-FROM ghcr.io/axoflow/axoflow-otel-collector/axoflow-otel-collector:0.120.0-axoflow.1 AS axo-otelcol
+FROM ghcr.io/axoflow/axoflow-otel-collector/axoflow-otel-collector:0.129.0-axoflow.kafkareceiver AS axo-otelcol
 
 FROM alpine:3.21 AS base
 
