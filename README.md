@@ -8,6 +8,7 @@ You can find guides per connector:
 
 - [Azure connector](./connectors/azure/README.md#quickstart)
 - [AWS connector](./connectors/aws/README.md#quickstart)
+- [Kafka connector](./connectors/kafka/README.md#quickstart)
 
 ## Environment Variables
 
@@ -45,6 +46,32 @@ You can find guides per connector:
 | `AWS_SDK_LOAD_CONFIG` | No | - | Set to 1 to load AWS config |
 | `AWS_ACCESS_KEY_ID` | No | - | AWS access key ID for direct authentication |
 | `AWS_SECRET_ACCESS_KEY` | No | - | AWS secret access key for direct authentication |
+
+### Kafka Provider
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `KAFKA_BROKERS` | No | `localhost:9092` | Kafka broker addresses (e.g., `broker1:9092,broker2:9092`) |
+| `KAFKA_PROTOCOL_VERSION` | No | `2.1.0` | Kafka protocol version |
+| `KAFKA_RESOLVE_CANONICAL_BOOTSTRAP_SERVERS_ONLY` | No | `false` | Resolve then reverse-lookup broker IPs during startup |
+| `KAFKA_LOGS_TOPIC` | No | `otlp_logs` | Topic for consuming logs |
+| `KAFKA_LOGS_ENCODING` | No | `otlp_json` | Encoding for logs (otlp_proto, otlp_json, raw, text, json, azure_resource_logs) |
+| `KAFKA_GROUP_ID` | No | `axocloudconnector` | Consumer group ID |
+| `KAFKA_CLIENT_ID` | No | `axocloudconnector` | Kafka client ID |
+| `KAFKA_INITIAL_OFFSET` | No | `latest` | Initial offset (`latest` or `earliest`) |
+| `KAFKA_GROUP_INSTANCE_ID` | No | - | Unique identifier for static consumer group membership |
+| `KAFKA_SESSION_TIMEOUT` | No | `10s` | Timeout for detecting client failures |
+| `KAFKA_HEARTBEAT_INTERVAL` | No | `3s` | Expected time between heartbeats |
+| `KAFKA_GROUP_REBALANCE_STRATEGY` | No | `range` | Partition assignment strategy (range, roundrobin, sticky) |
+| `KAFKA_MIN_FETCH_SIZE` | No | `1` | Minimum message bytes to fetch |
+| `KAFKA_DEFAULT_FETCH_SIZE` | No | `1048576` | Default message bytes to fetch (1MB) |
+| `KAFKA_MAX_FETCH_SIZE` | No | `0` | Maximum message bytes to fetch (0 = unlimited) |
+| `KAFKA_MAX_FETCH_WAIT` | No | `250ms` | Maximum wait time for min_fetch_size bytes |
+| `KAFKA_TLS_INSECURE` | No | `false` | Use insecure connection |
+| `KAFKA_TLS_CA_FILE` | No | - | Path to CA certificate file |
+| `KAFKA_TLS_CERT_FILE` | No | - | Path to client certificate file |
+| `KAFKA_TLS_KEY_FILE` | No | - | Path to client key file |
+| `KAFKA_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Skip TLS certificate verification |
 
 ## Usage
 
