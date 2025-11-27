@@ -44,6 +44,9 @@ processors:
       - key: "com.axoflow.product"
         action: insert
         value: "azure-event-hubs"
+      - key: "com.axoflow.vendor"
+        action: insert
+        value: "microsoft"
 
 receivers: # Provider specific!
   azureeventhub:
