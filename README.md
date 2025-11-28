@@ -73,6 +73,41 @@ You can find guides per connector:
 | `KAFKA_TLS_KEY_FILE` | No | - | Path to client key file |
 | `KAFKA_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Skip TLS certificate verification |
 
+### Crowdstrike Provider
+
+
+### Crowdstrike Provider
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `CROWDSTRIKE_ACCESS_TOKEN` | No* | - | OAuth2 access token. Required **if not using client_id/client_secret**. |
+| `CROWDSTRIKE_CLIENT_ID` | No* | - | Client ID for Crowdstrike API authentication. Required **if not using access_token**. |
+| `CROWDSTRIKE_CLIENT_SECRET` | No* | - | Client Secret for Crowdstrike API authentication. Required **if not using access_token**. |
+| `CROWDSTRIKE_MEMBER_CID` | No | - | Member CID for MSSP (for cases when OAuth2 authenticates multiple CIDs). |
+| `CROWDSTRIKE_CLOUD` | No | - | Cloud region (e.g., `us-1`, `us-2`, `eu-1`, `us-gov-1`). |
+| `CROWDSTRIKE_HOST_OVERRIDE` | No | - | Optional override for API hostname. |
+| `CROWDSTRIKE_BASE_PATH_OVERRIDE` | No | - | Optional override for API base path. |
+| `CROWDSTRIKE_POLL_INTERVAL` | No | - | Poll interval for pulling logs/events. |
+| `CROWDSTRIKE_DEBUG` | No | `false` | Enables verbose Crowdstrike API debugging. |
+
+#### TLS Settings
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `CROWDSTRIKE_TLS_INSECURE` | No | `false` | Disable TLS security (insecure). |
+| `CROWDSTRIKE_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Skip TLS certificate verification. |
+| `CROWDSTRIKE_TLS_SERVER_NAME_OVERRIDE` | No | - | Optional TLS server name override. |
+| `CROWDSTRIKE_TLS_CA_FILE` | No | - | Path to a CA certificate file. |
+| `CROWDSTRIKE_TLS_CA_PEM` | No | - | PEM-encoded CA certificate. |
+| `CROWDSTRIKE_TLS_CERT_FILE` | No | - | Path to a client certificate file. |
+| `CROWDSTRIKE_TLS_CERT_PEM` | No | - | PEM-encoded client certificate. |
+| `CROWDSTRIKE_TLS_KEY_FILE` | No | - | Path to a client private key file. |
+| `CROWDSTRIKE_TLS_KEY_PEM` | No | - | PEM-encoded client private key. |
+| `CROWDSTRIKE_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use. |
+| `CROWDSTRIKE_TLS_MAX_VERSION` | No | - | Maximum TLS version to use. |
+| `CROWDSTRIKE_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Include system CA certs along with provided CA. |
+
+
 ## Usage
 
 ### Local Development with Docker

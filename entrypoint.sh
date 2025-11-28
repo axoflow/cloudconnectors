@@ -11,6 +11,7 @@ detect_provider() {
     env | grep -q "^AZURE_" && provider="$provider azure" && count=$((count + 1))
     env | grep -q "^AWS_" && provider="$provider aws" && count=$((count + 1))
     env | grep -q "^KAFKA_" && provider="$provider kafka" && count=$((count + 1))
+    env | grep -q "^CROWDSTRIKE_" && provider="$provider crowdstrike" && count=$((count + 1))
     # env | grep -q "^GCP_" && provider="$provider gcp" && count=$((count + 1))
 
     if [ "$count" -gt 1 ]; then
@@ -31,5 +32,6 @@ echo "No cloud provider configuration detected. Please set environment variables
 echo "   - Azure (AZURE_*)"
 echo "   - AWS (AWS_*)"
 echo "   - Kafka (KAFKA_*)"
+echo "   - Crowdstrike (CROWDSTRIKE_*)"
 # echo "   - GCP (GCP_*)"
 exit 1
