@@ -14,7 +14,7 @@ kubectl create secret generic kafka-credentials \
     --namespace cloudconnectors \
     --dry-run=client -o yaml | kubectl apply -f -
 
-helm upgrade --install --wait --namespace cloudconnectors cloudconnectors ./charts/cloudconnectors \
+helm upgrade --install --wait --namespace cloudconnectors cloudconnectors ../../charts/cloudconnectors \
     --set image.repository="axocloudconnectors" \
     --set image.tag="dev" \
     --set 'env[0].name=AXOROUTER_ENDPOINT' \
