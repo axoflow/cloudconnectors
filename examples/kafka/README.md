@@ -25,7 +25,10 @@ This script:
 
 ```bash
 # Build the connector image
-make docker-build
+cd ../../ && make docker-build && cd -
+
+# Load the cloudconnector image to the cluster
+minikube image load axocloudconnectors:dev
 
 # Deploy via Helm
 ./test-helm.sh
@@ -42,7 +45,7 @@ This deploys the connector as a StatefulSet in the `cloudconnectors` namespace.
 
 ```bash
 # Build the connector image
-make docker-build
+cd ../../ && make docker-build && cd -
 
 # Run locally
 ./test-plaintext.sh
