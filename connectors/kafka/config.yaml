@@ -77,12 +77,12 @@ receivers: # Provider specific!
       key_file: ${env:KAFKA_TLS_KEY_FILE}
       insecure_skip_verify: ${env:KAFKA_TLS_INSECURE_SKIP_VERIFY:-false}
 
-  autocommit:
-    enable: false
-  message_marking:
-    after: true
-    on_error: false
-    on_permanent_error: true
+    autocommit:
+      enable: false
+    message_marking:
+      after: true
+      on_error: false
+      # on_permanent_error: true #FIXME: add this after version bump
     metadata:
       full: true
       retry:
