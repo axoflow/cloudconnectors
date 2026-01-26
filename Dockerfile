@@ -1,4 +1,4 @@
-FROM ghcr.io/axoflow/axoflow-otel-collector/axoflow-otel-collector:0.129.0-axoflow.4 AS axo-otelcol
+FROM ghcr.io/axoflow/axoflow-otel-collector/axoflow-otel-collector:0.143.0-axoflow.0 AS axo-otelcol
 
 FROM alpine:3.21 AS base
 
