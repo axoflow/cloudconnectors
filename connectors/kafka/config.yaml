@@ -1,5 +1,5 @@
 exporters:
-  otlp/axorouter:
+  otlp_grpc/axorouter:
     endpoint: ${env:AXOROUTER_ENDPOINT}
     retry_on_failure:
       enabled: true
@@ -109,4 +109,4 @@ service:
     logs:
       receivers: [kafka]
       processors: [resource/axoflow_device_id, resourcedetection/system, resource/axoflow]
-      exporters: [otlp/axorouter]
+      exporters: [otlp_grpc/axorouter]
