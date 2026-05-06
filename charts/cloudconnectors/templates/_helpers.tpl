@@ -79,5 +79,5 @@ Create the name of the service account to use
 Storage path helper
 */}}
 {{- define "cloudconnectors.storagePath" -}}
-{{- default "/etc/axoflow-otel-collector/storage" .Values.storage.path -}}
+{{- default "/var/lib/axoflow-otel-collector/storage" .Values.storage.path -}}
 {{- end -}}
