@@ -1,0 +1,99 @@
+exporters:
+  otlp_grpc/axorouter:
+    endpoint: ${env:AXOROUTER_ENDPOINT}
+    retry_on_failure:
+      enabled: true
+      max_elapsed_time: 0
+    sending_queue:
+      enabled: true
+      storage: file_storage
+    tls:
+      insecure: ${env:AXOROUTER_TLS_INSECURE:-false}
+      ca_file: ${env:AXOROUTER_TLS_CA_FILE}
+      ca_pem: ${env:AXOROUTER_TLS_CA_PEM}
+      cert_file: ${env:AXOROUTER_TLS_CERT_FILE}
+      cert_pem: ${env:AXOROUTER_TLS_CERT_PEM}
+      key_file: ${env:AXOROUTER_TLS_KEY_FILE}
+      key_pem: ${env:AXOROUTER_TLS_KEY_PEM}
+      min_version: ${env:AXOROUTER_TLS_MIN_VERSION:-1.2}
+      max_version: ${env:AXOROUTER_TLS_MAX_VERSION}
+      include_system_ca_certs_pool: ${env:AXOROUTER_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL:-false}
+      insecure_skip_verify: ${env:AXOROUTER_TLS_INSECURE_SKIP_VERIFY:-false}
+
+processors:
+  resource/axoflow_device_id:
+    attributes:
+      - key: "com.axoflow.device_id"
+        action: insert
+        value: "${env:AXOCLOUDCONNECTOR_DEVICE_ID}"
+
+  resourcedetection/system:
+    detectors: ["system", "env"]
+    system:
+      hostname_sources: ["dns", "os", "cname", "lookup"]
+      resource_attributes:
+        host.name:
+          enabled: true
+        host.ip:
+          enabled: true
+        host.id:
+          enabled: true
+
+  resource/axoflow: # Provider specific!
+    attributes:
+      - key: "com.axoflow.vendor"
+        action: insert
+        value: "elastic"
+      - key: "com.axoflow.product"
+        action: insert
+        value: "elasticsearch"
+
+receivers: # Provider specific!
+  elasticsearchlogs:
+    endpoint: ${env:ELASTICSEARCH_ENDPOINT:-http://localhost:9200}
+    api_key: ${env:ELASTICSEARCH_API_KEY}
+    username: ${env:ELASTICSEARCH_USERNAME}
+    password: ${env:ELASTICSEARCH_PASSWORD}
+    indices:
+      - ${env:ELASTICSEARCH_INDEX:-logs-*}
+    timestamp_field: ${env:ELASTICSEARCH_TIMESTAMP_FIELD:-@timestamp}
+    # Stable sort for search_after pagination. The last entry must be unique per document; _seq_no is
+    # monotonic and sortable without requiring fielddata (unlike _id). Adjust if your schema differs.
+    sort:
+      - "@timestamp": asc
+      - "_seq_no": asc
+    page_size: ${env:ELASTICSEARCH_PAGE_SIZE:-1000}
+    batch_limit: ${env:ELASTICSEARCH_BATCH_LIMIT:-0}
+    poll_interval: ${env:ELASTICSEARCH_POLL_INTERVAL:-30s}
+    initial_delay: ${env:ELASTICSEARCH_INITIAL_DELAY:-1s}
+    start_at: ${env:ELASTICSEARCH_START_AT:-end}
+    initial_lookback: ${env:ELASTICSEARCH_INITIAL_LOOKBACK:-1h}
+    storage: file_storage
+    tls:
+      insecure: ${env:ELASTICSEARCH_TLS_INSECURE:-false}
+      insecure_skip_verify: ${env:ELASTICSEARCH_TLS_INSECURE_SKIP_VERIFY:-false}
+      ca_file: ${env:ELASTICSEARCH_TLS_CA_FILE}
+      ca_pem: ${env:ELASTICSEARCH_TLS_CA_PEM}
+      cert_file: ${env:ELASTICSEARCH_TLS_CERT_FILE}
+      cert_pem: ${env:ELASTICSEARCH_TLS_CERT_PEM}
+      key_file: ${env:ELASTICSEARCH_TLS_KEY_FILE}
+      key_pem: ${env:ELASTICSEARCH_TLS_KEY_PEM}
+      min_version: ${env:ELASTICSEARCH_TLS_MIN_VERSION:-1.2}
+      max_version: ${env:ELASTICSEARCH_TLS_MAX_VERSION}
+      include_system_ca_certs_pool: ${env:ELASTICSEARCH_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL:-false}
+
+extensions:
+  health_check:
+    endpoint: ${env:POD_IP}:13133
+  file_storage:
+    directory: ${env:STORAGE_DIRECTORY}
+    create_directory: true
+
+service:
+  extensions: [health_check, file_storage]
+  pipelines:
+    logs:
+      receivers: [elasticsearchlogs]
+      processors:
+        [resource/axoflow_device_id, resourcedetection/system, resource/axoflow]
+      exporters: [otlp_grpc/axorouter]
