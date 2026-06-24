@@ -9,6 +9,7 @@ You can find guides per connector:
 - [Azure connector](./connectors/azure/README.md#quickstart)
 - [AWS connector](./connectors/aws/README.md#quickstart)
 - [Kafka connector](./connectors/kafka/README.md#quickstart)
+- [Elasticsearch connector](./connectors/elasticsearch/README.md#quickstart)
 
 ## Environment Variables
 
@@ -106,6 +107,39 @@ You can find guides per connector:
 | `CROWDSTRIKE_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use. |
 | `CROWDSTRIKE_TLS_MAX_VERSION` | No | - | Maximum TLS version to use. |
 | `CROWDSTRIKE_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Include system CA certs along with provided CA. |
+
+### Elasticsearch Provider
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `ELASTICSEARCH_ENDPOINT` | No | `http://localhost:9200` | Elasticsearch base URL. |
+| `ELASTICSEARCH_API_KEY` | No* | - | Elasticsearch API key (base64 `id:api_key`). Use this **or** username/password. |
+| `ELASTICSEARCH_USERNAME` | No* | - | Username for HTTP basic auth. Must be set together with the password. |
+| `ELASTICSEARCH_PASSWORD` | No* | - | Password for HTTP basic auth. Must be set together with the username. |
+| `ELASTICSEARCH_INDEX` | No | `logs-*` | Index or data-stream pattern to read. |
+| `ELASTICSEARCH_TIMESTAMP_FIELD` | No | `@timestamp` | Document field used as the time cursor. |
+| `ELASTICSEARCH_PAGE_SIZE` | No | `1000` | Documents per `_search` request. |
+| `ELASTICSEARCH_BATCH_LIMIT` | No | `0` | Max documents fetched per poll cycle (`0` = no limit). |
+| `ELASTICSEARCH_POLL_INTERVAL` | No | `30s` | How often a new search cycle starts. |
+| `ELASTICSEARCH_INITIAL_DELAY` | No | `1s` | Delay before the first poll after startup. |
+| `ELASTICSEARCH_START_AT` | No | `end` | Where to begin on a fresh start: `beginning` or `end`. |
+| `ELASTICSEARCH_INITIAL_LOOKBACK` | No | `1h` | When `start_at=end`, how far back from now to begin. |
+
+#### TLS Settings
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `ELASTICSEARCH_TLS_INSECURE` | No | `false` | Disable TLS security (insecure). |
+| `ELASTICSEARCH_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Skip TLS certificate verification. |
+| `ELASTICSEARCH_TLS_CA_FILE` | No | - | Path to a CA certificate file. |
+| `ELASTICSEARCH_TLS_CA_PEM` | No | - | PEM-encoded CA certificate. |
+| `ELASTICSEARCH_TLS_CERT_FILE` | No | - | Path to a client certificate file. |
+| `ELASTICSEARCH_TLS_CERT_PEM` | No | - | PEM-encoded client certificate. |
+| `ELASTICSEARCH_TLS_KEY_FILE` | No | - | Path to a client private key file. |
+| `ELASTICSEARCH_TLS_KEY_PEM` | No | - | PEM-encoded client private key. |
+| `ELASTICSEARCH_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use. |
+| `ELASTICSEARCH_TLS_MAX_VERSION` | No | - | Maximum TLS version to use. |
+| `ELASTICSEARCH_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Include system CA certs along with provided CA. |
 
 
 ## Usage
