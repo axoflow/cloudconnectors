@@ -13,6 +13,7 @@ detect_provider() {
     env | grep -q "^KAFKA_" && provider="$provider kafka" && count=$((count + 1))
     env | grep -q "^CROWDSTRIKE_" && provider="$provider crowdstrike" && count=$((count + 1))
     env | grep -q "^ELASTICSEARCH_" && provider="$provider elasticsearch" && count=$((count + 1))
+    env | grep -q "^IDIRA_" && provider="$provider idira" && count=$((count + 1))
     # env | grep -q "^GCP_" && provider="$provider gcp" && count=$((count + 1))
 
     if [ "$count" -gt 1 ]; then
@@ -35,5 +36,6 @@ echo "   - AWS (AWS_*)"
 echo "   - Kafka (KAFKA_*)"
 echo "   - Crowdstrike (CROWDSTRIKE_*)"
 echo "   - Elasticsearch (ELASTICSEARCH_*)"
+echo "   - Idira (IDIRA_*)"
 # echo "   - GCP (GCP_*)"
 exit 1

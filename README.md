@@ -10,6 +10,7 @@ You can find guides per connector:
 - [AWS connector](./connectors/aws/README.md#quickstart)
 - [Kafka connector](./connectors/kafka/README.md#quickstart)
 - [Elasticsearch connector](./connectors/elasticsearch/README.md#quickstart)
+- [Idira connector](./connectors/idira/README.md#quickstart)
 
 ## Environment Variables
 
@@ -140,6 +141,37 @@ You can find guides per connector:
 | `ELASTICSEARCH_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use. |
 | `ELASTICSEARCH_TLS_MAX_VERSION` | No | - | Maximum TLS version to use. |
 | `ELASTICSEARCH_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Include system CA certs along with provided CA. |
+
+### Idira Provider
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `IDIRA_ENDPOINT` | Yes | - | Audit API base URL, e.g. `https://audit.example.cloud`. |
+| `IDIRA_API_KEY` | Yes | - | SIEM integration API key, sent as the `x-api-key` header. |
+| `IDIRA_TOKEN_URL` | Yes | - | OAuth 2 token endpoint, `https://<identity_fqdn>/OAuth2/Token/<web_app_id>`. |
+| `IDIRA_CLIENT_ID` | Yes | - | OAuth 2 client ID. |
+| `IDIRA_CLIENT_SECRET` | Yes | - | OAuth 2 client secret. |
+| `IDIRA_POLL_INTERVAL` | No | `1m` | How often a query is created. The API accepts one query per minute, so lower values are rejected. |
+| `IDIRA_INITIAL_LOOKBACK` | No | `5m` | How far back the first poll queries when no checkpoint is stored. |
+| `IDIRA_PAGE_SIZE` | No | `500` | Events per results page. |
+| `IDIRA_APPLICATION_CODES` | No | - | YAML list of application codes to filter on, e.g. `'[DPA]'`. Unset means no filter. |
+| `IDIRA_TIMEOUT` | No | `30s` | HTTP request timeout. |
+
+#### TLS Settings
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `IDIRA_TLS_INSECURE` | No | `false` | Disable TLS security (insecure). |
+| `IDIRA_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Skip TLS certificate verification. |
+| `IDIRA_TLS_CA_FILE` | No | - | Path to a CA certificate file. |
+| `IDIRA_TLS_CA_PEM` | No | - | PEM-encoded CA certificate. |
+| `IDIRA_TLS_CERT_FILE` | No | - | Path to a client certificate file. |
+| `IDIRA_TLS_CERT_PEM` | No | - | PEM-encoded client certificate. |
+| `IDIRA_TLS_KEY_FILE` | No | - | Path to a client private key file. |
+| `IDIRA_TLS_KEY_PEM` | No | - | PEM-encoded client private key. |
+| `IDIRA_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use. |
+| `IDIRA_TLS_MAX_VERSION` | No | - | Maximum TLS version to use. |
+| `IDIRA_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Include system CA certs along with provided CA. |
 
 
 ## Usage
