@@ -1,0 +1,93 @@
+exporters:
+  otlp_grpc/axorouter:
+    endpoint: ${env:AXOROUTER_ENDPOINT}
+    retry_on_failure:
+      enabled: true
+      max_elapsed_time: 0
+    sending_queue:
+      enabled: true
+      storage: file_storage
+    tls:
+      insecure: ${env:AXOROUTER_TLS_INSECURE:-false}
+      ca_file: ${env:AXOROUTER_TLS_CA_FILE}
+      ca_pem: ${env:AXOROUTER_TLS_CA_PEM}
+      cert_file: ${env:AXOROUTER_TLS_CERT_FILE}
+      cert_pem: ${env:AXOROUTER_TLS_CERT_PEM}
+      key_file: ${env:AXOROUTER_TLS_KEY_FILE}
+      key_pem: ${env:AXOROUTER_TLS_KEY_PEM}
+      min_version: ${env:AXOROUTER_TLS_MIN_VERSION:-1.2}
+      max_version: ${env:AXOROUTER_TLS_MAX_VERSION}
+      include_system_ca_certs_pool: ${env:AXOROUTER_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL:-false}
+      insecure_skip_verify: ${env:AXOROUTER_TLS_INSECURE_SKIP_VERIFY:-false}
+
+processors:
+  resource/axoflow_device_id:
+    attributes:
+      - key: "com.axoflow.device_id"
+        action: insert
+        value: "${env:AXOCLOUDCONNECTOR_DEVICE_ID}"
+
+  resourcedetection/system:
+    detectors: ["system", "env"]
+    system:
+      hostname_sources: ["dns", "os", "cname", "lookup"]
+      resource_attributes:
+        host.name:
+          enabled: true
+        host.ip:
+          enabled: true
+        host.id:
+          enabled: true
+
+  resource/axoflow: # Provider specific!
+    attributes:
+      - key: "com.axoflow.vendor"
+        action: insert
+        value: "idira"
+      - key: "com.axoflow.product"
+        action: insert
+        value: "idira"
+
+receivers: # Provider specific!
+  idira:
+    endpoint: ${env:IDIRA_ENDPOINT}
+    api_key: ${env:IDIRA_API_KEY}
+    token_url: ${env:IDIRA_TOKEN_URL}
+    client_id: ${env:IDIRA_CLIENT_ID}
+    client_secret: ${env:IDIRA_CLIENT_SECRET}
+    # The audit API rejects more than one query per minute, so 1m is also the floor.
+    poll_interval: ${env:IDIRA_POLL_INTERVAL:-1m}
+    initial_lookback: ${env:IDIRA_INITIAL_LOOKBACK:-5m}
+    page_size: ${env:IDIRA_PAGE_SIZE:-500}
+    # A YAML list, e.g. IDIRA_APPLICATION_CODES='[DPA]'. Empty means no filter.
+    application_codes: ${env:IDIRA_APPLICATION_CODES:-[]}
+    timeout: ${env:IDIRA_TIMEOUT:-30s}
+    storage: file_storage
+    tls:
+      insecure: ${env:IDIRA_TLS_INSECURE:-false}
+      insecure_skip_verify: ${env:IDIRA_TLS_INSECURE_SKIP_VERIFY:-false}
+      ca_file: ${env:IDIRA_TLS_CA_FILE}
+      ca_pem: ${env:IDIRA_TLS_CA_PEM}
+      cert_file: ${env:IDIRA_TLS_CERT_FILE}
+      cert_pem: ${env:IDIRA_TLS_CERT_PEM}
+      key_file: ${env:IDIRA_TLS_KEY_FILE}
+      key_pem: ${env:IDIRA_TLS_KEY_PEM}
+      min_version: ${env:IDIRA_TLS_MIN_VERSION:-1.2}
+      max_version: ${env:IDIRA_TLS_MAX_VERSION}
+      include_system_ca_certs_pool: ${env:IDIRA_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL:-false}
+
+extensions:
+  health_check:
+    endpoint: ${env:POD_IP}:13133
+  file_storage:
+    directory: ${env:STORAGE_DIRECTORY}
+    create_directory: true
+
+service:
+  extensions: [health_check, file_storage]
+  pipelines:
+    logs:
+      receivers: [idira]
+      processors:
+        [resource/axoflow_device_id, resourcedetection/system, resource/axoflow]
+      exporters: [otlp_grpc/axorouter]
