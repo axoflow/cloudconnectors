@@ -11,6 +11,7 @@ You can find guides per connector:
 - [Kafka connector](./connectors/kafka/README.md#quickstart)
 - [Elasticsearch connector](./connectors/elasticsearch/README.md#quickstart)
 - [Idira connector](./connectors/idira/README.md#quickstart)
+- [Tenable connector](./connectors/tenable/README.md#quickstart)
 
 ## Environment Variables
 
@@ -172,6 +173,35 @@ You can find guides per connector:
 | `IDIRA_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use. |
 | `IDIRA_TLS_MAX_VERSION` | No | - | Maximum TLS version to use. |
 | `IDIRA_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Include system CA certs along with provided CA. |
+
+### Tenable Provider
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `TENABLE_ACCESS_KEY` | Yes | - | Tenable API access key (sent in the `X-ApiKeys` header). |
+| `TENABLE_SECRET_KEY` | Yes | - | Tenable API secret key. |
+| `TENABLE_ENDPOINT` | No | `https://cloud.tenable.com` | Base URL of the Tenable API. |
+| `TENABLE_POLL_INTERVAL` | No | `5m` | How often the audit log is queried. |
+| `TENABLE_PAGE_SIZE` | No | `1000` | Events requested per API call (max `5000`). |
+| `TENABLE_MAX_RECORDS_PER_POLL` | No | `5000` | Max events collected per poll; the remainder is picked up by the next poll. |
+| `TENABLE_INITIAL_LOOKBACK` | No | `24h` | How far back to collect when no checkpoint exists. Tenable retains 30 days. |
+| `TENABLE_TIMEOUT` | No | `30s` | HTTP request timeout. |
+
+#### TLS Settings
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `TENABLE_TLS_INSECURE` | No | `false` | Disable TLS security (insecure). |
+| `TENABLE_TLS_INSECURE_SKIP_VERIFY` | No | `false` | Skip TLS certificate verification. |
+| `TENABLE_TLS_CA_FILE` | No | - | Path to a CA certificate file. |
+| `TENABLE_TLS_CA_PEM` | No | - | PEM-encoded CA certificate. |
+| `TENABLE_TLS_CERT_FILE` | No | - | Path to a client certificate file. |
+| `TENABLE_TLS_CERT_PEM` | No | - | PEM-encoded client certificate. |
+| `TENABLE_TLS_KEY_FILE` | No | - | Path to a client private key file. |
+| `TENABLE_TLS_KEY_PEM` | No | - | PEM-encoded client private key. |
+| `TENABLE_TLS_MIN_VERSION` | No | `1.2` | Minimum TLS version to use. |
+| `TENABLE_TLS_MAX_VERSION` | No | - | Maximum TLS version to use. |
+| `TENABLE_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL` | No | `false` | Include system CA certs along with provided CA. |
 
 
 ## Usage
