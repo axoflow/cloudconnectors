@@ -2,20 +2,42 @@
 
 set -eu
 
+# The collector reads this through ${env:STORAGE_DIRECTORY}, so the default has
+# to reach its environment, not just this shell.
 : "${STORAGE_DIRECTORY:=/var/lib/axoflow-otel-collector/storage}"
+export STORAGE_DIRECTORY
+
+# The collector expands ${env:VAR:-default} with POSIX `-` semantics: the
+# default applies only while VAR is unset. A variable that is set but empty --
+# `docker run -e VAR="${VAR}"` with no VAR in the shell, or a Helm `value: ""` --
+# resolves to null instead and overrides the default. Unset those.
+unset_empty_vars() {
+    local name
+    local value
+
+    for name in "$@"; do
+        eval "value=\${$name-}"
+        if [ -z "$value" ]; then
+            unset "$name"
+        fi
+    done
+}
 
 detect_provider() {
     local provider=""
     local count=0
 
-    env | grep -q "^AZURE_" && provider="$provider azure" && count=$((count + 1))
-    env | grep -q "^AWS_" && provider="$provider aws" && count=$((count + 1))
-    env | grep -q "^KAFKA_" && provider="$provider kafka" && count=$((count + 1))
-    env | grep -q "^CROWDSTRIKE_" && provider="$provider crowdstrike" && count=$((count + 1))
-    env | grep -q "^ELASTICSEARCH_" && provider="$provider elasticsearch" && count=$((count + 1))
-    env | grep -q "^IDIRA_" && provider="$provider idira" && count=$((count + 1))
-    env | grep -q "^TENABLE_" && provider="$provider tenable" && count=$((count + 1))
-    # env | grep -q "^GCP_" && provider="$provider gcp" && count=$((count + 1))
+    # `env` prints a set-but-empty variable as `VAR=`, and an empty one carries no
+    # configuration. The `=.` requires a value, so it does not select a provider --
+    # otherwise an empty leftover would be reported as a second one.
+    env | grep -q "^AZURE_[^=]*=." && provider="$provider azure" && count=$((count + 1))
+    env | grep -q "^AWS_[^=]*=." && provider="$provider aws" && count=$((count + 1))
+    env | grep -q "^KAFKA_[^=]*=." && provider="$provider kafka" && count=$((count + 1))
+    env | grep -q "^CROWDSTRIKE_[^=]*=." && provider="$provider crowdstrike" && count=$((count + 1))
+    env | grep -q "^ELASTICSEARCH_[^=]*=." && provider="$provider elasticsearch" && count=$((count + 1))
+    env | grep -q "^IDIRA_[^=]*=." && provider="$provider idira" && count=$((count + 1))
+    env | grep -q "^TENABLE_[^=]*=." && provider="$provider tenable" && count=$((count + 1))
+    # env | grep -q "^GCP_[^=]*=." && provider="$provider gcp" && count=$((count + 1))
 
     if [ "$count" -gt 1 ]; then
         echo "Multiple cloud providers detected:${provider}"
@@ -28,6 +50,18 @@ detect_provider() {
 
 if PROVIDER=$(detect_provider); then
     echo "Detected ${PROVIDER} configuration"
+
+    unset_empty_vars \
+        CROWDSTRIKE_POLL_INTERVAL \
+        CROWDSTRIKE_INITIAL_LOOKBACK \
+        CROWDSTRIKE_DISABLE_ALERTS \
+        CROWDSTRIKE_NGSIEM_POLL_INTERVAL \
+        CROWDSTRIKE_DEBUG \
+        CROWDSTRIKE_TLS_INSECURE \
+        CROWDSTRIKE_TLS_INSECURE_SKIP_VERIFY \
+        CROWDSTRIKE_TLS_MIN_VERSION \
+        CROWDSTRIKE_TLS_INCLUDE_SYSTEM_CA_CERTS_POOL
+
     exec ./axoflow-otel-collector --config "/etc/axoflow-otel-collector/connectors/${PROVIDER}/config.yaml"
 fi
 

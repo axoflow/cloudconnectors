@@ -90,7 +90,12 @@ You can find guides per connector:
 | `CROWDSTRIKE_CLOUD` | No | - | Cloud region (e.g., `us-1`, `us-2`, `eu-1`, `us-gov-1`). |
 | `CROWDSTRIKE_HOST_OVERRIDE` | No | - | Optional override for API hostname. |
 | `CROWDSTRIKE_BASE_PATH_OVERRIDE` | No | - | Optional override for API base path. |
-| `CROWDSTRIKE_POLL_INTERVAL` | No | - | Poll interval for pulling logs/events. |
+| `CROWDSTRIKE_POLL_INTERVAL` | No | `30s` | Poll interval for pulling alerts and NG-SIEM events. |
+| `CROWDSTRIKE_INITIAL_LOOKBACK` | No | `0s` | How far back the first poll reaches. Only applies before a checkpoint exists; afterward collection resumes from the stored one. |
+| `CROWDSTRIKE_DISABLE_ALERTS` | No | `false` | Turns the Falcon Alerts poller off, e.g. to collect NG-SIEM events only. |
+| `CROWDSTRIKE_NGSIEM_REPOSITORY` | No | - | NG-SIEM repository (view) to pull log events from, e.g. `search-all`. Setting it enables the NG-SIEM search poller. |
+| `CROWDSTRIKE_NGSIEM_QUERY_STRING` | No | `*` | CQL filter selecting the NG-SIEM events to pull. Aggregating functions must not be used: every matched event becomes one log record. |
+| `CROWDSTRIKE_NGSIEM_POLL_INTERVAL` | No | `CROWDSTRIKE_POLL_INTERVAL` | Separate cadence for the NG-SIEM search poller; a query job costs far more than an alert page. |
 | `CROWDSTRIKE_DEBUG` | No | `false` | Enables verbose Crowdstrike API debugging. |
 
 #### TLS Settings
