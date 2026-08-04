@@ -1,7 +1,13 @@
 
 # CrowdStrike Falcon Receiver
 
-This directory contains the Axoflow CrowdStrike Falcon receiver which helps collecting alerts from the CrowdStrike Falcon platform.
+This directory contains the Axoflow CrowdStrike Falcon receiver, which collects
+alerts from the CrowdStrike Falcon platform and, optionally, the raw log events
+ingested into an NG-SIEM repository.
+
+Both pollers checkpoint their progress into `STORAGE_DIRECTORY`, so a restart
+resumes where the connector stopped instead of replaying or skipping data. Keep
+that directory on a volume that survives the container.
 
 ## Quickstart
 
@@ -108,3 +114,28 @@ helm upgrade --install --wait --namespace cloudconnectors cloudconnectors ./char
   --set 'env[3].valueFrom.secretKeyRef.key=cloud'
 ```
 
+## Collecting NG-SIEM log events
+
+Set `CROWDSTRIKE_NGSIEM_REPOSITORY` to the repository (view) to pull from; the
+poller stays off while it is empty. `CROWDSTRIKE_NGSIEM_QUERY_STRING` narrows
+the selection and `CROWDSTRIKE_NGSIEM_POLL_INTERVAL` gives that poller its own
+cadence, since a query job costs far more than an alert page.
+
+```bash
+docker run \
+        --rm \
+        -v "${STORAGE_DIRECTORY}":"${STORAGE_DIRECTORY}" \
+        -e CROWDSTRIKE_CLIENT_ID="${CROWDSTRIKE_CLIENT_ID}" \
+        -e CROWDSTRIKE_CLIENT_SECRET="${CROWDSTRIKE_CLIENT_SECRET}" \
+        -e CROWDSTRIKE_CLOUD="${CROWDSTRIKE_CLOUD}" \
+        -e CROWDSTRIKE_NGSIEM_REPOSITORY="${CROWDSTRIKE_NGSIEM_REPOSITORY}" \
+        -e CROWDSTRIKE_NGSIEM_POLL_INTERVAL="5m" \
+        -e AXOROUTER_ENDPOINT="${AXOROUTER_ENDPOINT}" \
+        -e STORAGE_DIRECTORY="${STORAGE_DIRECTORY}" \
+        -e AXOCLOUDCONNECTOR_DEVICE_ID="${AXOCLOUDCONNECTOR_DEVICE_ID}" \
+        ghcr.io/axoflow/axocloudconnectors:latest
+```
+
+Set `CROWDSTRIKE_DISABLE_ALERTS=true` to collect NG-SIEM events only. A
+repository must be configured in that case, otherwise the connector has nothing
+to collect and refuses to start.

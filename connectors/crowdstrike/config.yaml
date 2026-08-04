@@ -57,7 +57,14 @@ receivers: # Provider specific!
     cloud: ${env:CROWDSTRIKE_CLOUD}
     host_override: ${env:CROWDSTRIKE_HOST_OVERRIDE}
     base_path_override: ${env:CROWDSTRIKE_BASE_PATH_OVERRIDE}
-    poll_interval: ${env:CROWDSTRIKE_POLL_INTERVAL}
+    poll_interval: ${env:CROWDSTRIKE_POLL_INTERVAL:-30s}
+    initial_lookback: ${env:CROWDSTRIKE_INITIAL_LOOKBACK:-0s}
+    disable_alerts: ${env:CROWDSTRIKE_DISABLE_ALERTS:-false}
+    ngsiem_search:
+      repository: ${env:CROWDSTRIKE_NGSIEM_REPOSITORY}
+      query_string: ${env:CROWDSTRIKE_NGSIEM_QUERY_STRING}
+      poll_interval: ${env:CROWDSTRIKE_NGSIEM_POLL_INTERVAL:-0s}
+    storage: file_storage
     debug: ${env:CROWDSTRIKE_DEBUG:-false}
     tls:
       insecure: ${env:CROWDSTRIKE_TLS_INSECURE:-false}
